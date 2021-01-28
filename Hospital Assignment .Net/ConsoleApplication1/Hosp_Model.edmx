@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HospitalModel1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="HospitalModel1StoreContainer">
+          <EntitySet Name="check_up" EntityType="HospitalModel1.Store.check_up" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="equipments" EntityType="HospitalModel1.Store.equipments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="medicines" EntityType="HospitalModel1.Store.medicines" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="patients" EntityType="HospitalModel1.Store.patients" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="HospitalModel1.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="treatment" EntityType="HospitalModel1.Store.treatment" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__check_up__med_id__173876EA" Association="HospitalModel1.Store.FK__check_up__med_id__173876EA">
+            <End Role="medicines" EntitySet="medicines" />
+            <End Role="check_up" EntitySet="check_up" />
+          </AssociationSet>
+          <AssociationSet Name="FK__check_up__patien__15502E78" Association="HospitalModel1.Store.FK__check_up__patien__15502E78">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="check_up" EntitySet="check_up" />
+          </AssociationSet>
+          <AssociationSet Name="FK__check_up__treat___164452B1" Association="HospitalModel1.Store.FK__check_up__treat___164452B1">
+            <End Role="treatment" EntitySet="treatment" />
+            <End Role="check_up" EntitySet="check_up" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="check_up">
+          <Key>
+            <PropertyRef Name="check_id" />
+          </Key>
+          <Property Name="check_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="patient_id" Type="int" Nullable="false" />
+          <Property Name="complains" Type="text" />
+          <Property Name="findings" Type="text" />
+          <Property Name="treat_id" Type="int" Nullable="false" />
+          <Property Name="med_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="check_date" Type="date" />
+        </EntityType>
+        <EntityType Name="equipments">
+          <Key>
+            <PropertyRef Name="equip_id" />
+          </Key>
+          <Property Name="equip_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="equip_name" Type="varchar" MaxLength="50" />
+          <Property Name="requested_date" Type="date" />
+          <Property Name="date_defected" Type="date" />
+        </EntityType>
+        <EntityType Name="medicines">
+          <Key>
+            <PropertyRef Name="med_id" />
+          </Key>
+          <Property Name="med_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="med_name" Type="varchar" MaxLength="64" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="available_Qty" Type="int" />
+          <Property Name="exp_date" Type="date" />
+          <Property Name="requested_date" Type="date" />
+        </EntityType>
+        <EntityType Name="patients">
+          <Key>
+            <PropertyRef Name="patient_id" />
+          </Key>
+          <Property Name="patient_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="varchar" MaxLength="65" />
+          <Property Name="lname" Type="varchar" MaxLength="65" />
+          <Property Name="patient_type" Type="varchar" MaxLength="65" />
+          <Property Name="age" Type="int" />
+          <Property Name="addrs" Type="text" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="treatment">
+          <Key>
+            <PropertyRef Name="treat_id" />
+          </Key>
+          <Property Name="treat_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="treat_type" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <Association Name="FK__check_up__med_id__173876EA">
+          <End Role="medicines" Type="HospitalModel1.Store.medicines" Multiplicity="1" />
+          <End Role="check_up" Type="HospitalModel1.Store.check_up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicines">
+              <PropertyRef Name="med_id" />
+            </Principal>
+            <Dependent Role="check_up">
+              <PropertyRef Name="med_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__check_up__patien__15502E78">
+          <End Role="patients" Type="HospitalModel1.Store.patients" Multiplicity="1" />
+          <End Role="check_up" Type="HospitalModel1.Store.check_up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="patient_id" />
+            </Principal>
+            <Dependent Role="check_up">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__check_up__treat___164452B1">
+          <End Role="treatment" Type="HospitalModel1.Store.treatment" Multiplicity="1" />
+          <End Role="check_up" Type="HospitalModel1.Store.check_up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="treatment">
+              <PropertyRef Name="treat_id" />
+            </Principal>
+            <Dependent Role="check_up">
+              <PropertyRef Name="treat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HospitalModel1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="HospitalEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="check_up" EntityType="HospitalModel1.check_up" />
+          <EntitySet Name="equipments" EntityType="HospitalModel1.equipment" />
+          <EntitySet Name="medicines" EntityType="HospitalModel1.medicine" />
+          <EntitySet Name="patients" EntityType="HospitalModel1.patient" />
+          <EntitySet Name="sysdiagrams" EntityType="HospitalModel1.sysdiagram" />
+          <EntitySet Name="treatments" EntityType="HospitalModel1.treatment" />
+          <AssociationSet Name="FK__check_up__med_id__173876EA" Association="HospitalModel1.FK__check_up__med_id__173876EA">
+            <End Role="medicines" EntitySet="medicines" />
+            <End Role="check_up" EntitySet="check_up" />
+          </AssociationSet>
+          <AssociationSet Name="FK__check_up__patien__15502E78" Association="HospitalModel1.FK__check_up__patien__15502E78">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="check_up" EntitySet="check_up" />
+          </AssociationSet>
+          <AssociationSet Name="FK__check_up__treat___164452B1" Association="HospitalModel1.FK__check_up__treat___164452B1">
+            <End Role="treatment" EntitySet="treatments" />
+            <End Role="check_up" EntitySet="check_up" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="check_up">
+          <Key>
+            <PropertyRef Name="check_id" />
+          </Key>
+          <Property Name="check_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="patient_id" Type="Int32" Nullable="false" />
+          <Property Name="complains" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="findings" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="treat_id" Type="Int32" Nullable="false" />
+          <Property Name="med_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="check_date" Type="DateTime" />
+          <NavigationProperty Name="medicine" Relationship="HospitalModel1.FK__check_up__med_id__173876EA" FromRole="check_up" ToRole="medicines" />
+          <NavigationProperty Name="patient" Relationship="HospitalModel1.FK__check_up__patien__15502E78" FromRole="check_up" ToRole="patients" />
+          <NavigationProperty Name="treatment" Relationship="HospitalModel1.FK__check_up__treat___164452B1" FromRole="check_up" ToRole="treatment" />
+        </EntityType>
+        <EntityType Name="equipment">
+          <Key>
+            <PropertyRef Name="equip_id" />
+          </Key>
+          <Property Name="equip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="equip_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="requested_date" Type="DateTime" />
+          <Property Name="date_defected" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="medicine">
+          <Key>
+            <PropertyRef Name="med_id" />
+          </Key>
+          <Property Name="med_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="med_name" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="available_Qty" Type="Int32" />
+          <Property Name="exp_date" Type="DateTime" />
+          <Property Name="requested_date" Type="DateTime" />
+          <NavigationProperty Name="check_up" Relationship="HospitalModel1.FK__check_up__med_id__173876EA" FromRole="medicines" ToRole="check_up" />
+        </EntityType>
+        <EntityType Name="patient">
+          <Key>
+            <PropertyRef Name="patient_id" />
+          </Key>
+          <Property Name="patient_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fname" Type="String" MaxLength="65" Unicode="false" FixedLength="false" />
+          <Property Name="lname" Type="String" MaxLength="65" Unicode="false" FixedLength="false" />
+          <Property Name="patient_type" Type="String" MaxLength="65" Unicode="false" FixedLength="false" />
+          <Property Name="age" Type="Int32" />
+          <Property Name="addrs" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="check_up" Relationship="HospitalModel1.FK__check_up__patien__15502E78" FromRole="patients" ToRole="check_up" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="treatment">
+          <Key>
+            <PropertyRef Name="treat_id" />
+          </Key>
+          <Property Name="treat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="treat_type" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="check_up" Relationship="HospitalModel1.FK__check_up__treat___164452B1" FromRole="treatment" ToRole="check_up" />
+        </EntityType>
+        <Association Name="FK__check_up__med_id__173876EA">
+          <End Role="medicines" Type="HospitalModel1.medicine" Multiplicity="1" />
+          <End Role="check_up" Type="HospitalModel1.check_up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicines">
+              <PropertyRef Name="med_id" />
+            </Principal>
+            <Dependent Role="check_up">
+              <PropertyRef Name="med_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__check_up__patien__15502E78">
+          <End Role="patients" Type="HospitalModel1.patient" Multiplicity="1" />
+          <End Role="check_up" Type="HospitalModel1.check_up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="patient_id" />
+            </Principal>
+            <Dependent Role="check_up">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__check_up__treat___164452B1">
+          <End Role="treatment" Type="HospitalModel1.treatment" Multiplicity="1" />
+          <End Role="check_up" Type="HospitalModel1.check_up" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="treatment">
+              <PropertyRef Name="treat_id" />
+            </Principal>
+            <Dependent Role="check_up">
+              <PropertyRef Name="treat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HospitalModel1StoreContainer" CdmEntityContainer="HospitalEntities1">
+          <EntitySetMapping Name="check_up"><EntityTypeMapping TypeName="HospitalModel1.check_up"><MappingFragment StoreEntitySet="check_up">
+            <ScalarProperty Name="check_id" ColumnName="check_id" />
+            <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+            <ScalarProperty Name="complains" ColumnName="complains" />
+            <ScalarProperty Name="findings" ColumnName="findings" />
+            <ScalarProperty Name="treat_id" ColumnName="treat_id" />
+            <ScalarProperty Name="med_id" ColumnName="med_id" />
+            <ScalarProperty Name="quantity" ColumnName="quantity" />
+            <ScalarProperty Name="check_date" ColumnName="check_date" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="equipments"><EntityTypeMapping TypeName="HospitalModel1.equipment"><MappingFragment StoreEntitySet="equipments">
+            <ScalarProperty Name="equip_id" ColumnName="equip_id" />
+            <ScalarProperty Name="equip_name" ColumnName="equip_name" />
+            <ScalarProperty Name="requested_date" ColumnName="requested_date" />
+            <ScalarProperty Name="date_defected" ColumnName="date_defected" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="medicines"><EntityTypeMapping TypeName="HospitalModel1.medicine"><MappingFragment StoreEntitySet="medicines">
+            <ScalarProperty Name="med_id" ColumnName="med_id" />
+            <ScalarProperty Name="med_name" ColumnName="med_name" />
+            <ScalarProperty Name="quantity" ColumnName="quantity" />
+            <ScalarProperty Name="available_Qty" ColumnName="available_Qty" />
+            <ScalarProperty Name="exp_date" ColumnName="exp_date" />
+            <ScalarProperty Name="requested_date" ColumnName="requested_date" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="patients"><EntityTypeMapping TypeName="HospitalModel1.patient"><MappingFragment StoreEntitySet="patients">
+            <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+            <ScalarProperty Name="fname" ColumnName="fname" />
+            <ScalarProperty Name="lname" ColumnName="lname" />
+            <ScalarProperty Name="patient_type" ColumnName="patient_type" />
+            <ScalarProperty Name="age" ColumnName="age" />
+            <ScalarProperty Name="addrs" ColumnName="addrs" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="HospitalModel1.sysdiagram"><MappingFragment StoreEntitySet="sysdiagrams">
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+            <ScalarProperty Name="version" ColumnName="version" />
+            <ScalarProperty Name="definition" ColumnName="definition" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="treatments"><EntityTypeMapping TypeName="HospitalModel1.treatment"><MappingFragment StoreEntitySet="treatment">
+            <ScalarProperty Name="treat_id" ColumnName="treat_id" />
+            <ScalarProperty Name="treat_type" ColumnName="treat_type" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Hosp_Model">
+        <EntityTypeShape EntityType="HospitalModel1.check_up" Width="1.5" PointX="3" PointY="1" Height="3.1340950520833331" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel1.equipment" Width="1.5" PointX="5.75" PointY="0.75" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel1.medicine" Width="1.5" PointX="0.75" PointY="1.375" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel1.patient" Width="1.5" PointX="0.75" PointY="5.625" Height="2.3648893229166648" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel1.sysdiagram" Width="1.5" PointX="2.75" PointY="5.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="HospitalModel1.treatment" Width="1.5" PointX="0.75" PointY="8.75" Height="1.5956835937499996" IsExpanded="true" />
+        <AssociationConnector Association="HospitalModel1.FK__check_up__med_id__173876EA" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.5574446614583328" />
+          <ConnectorPoint PointX="3" PointY="2.5574446614583328" />
+        </AssociationConnector>
+        <AssociationConnector Association="HospitalModel1.FK__check_up__patien__15502E78" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.8913378906249978" />
+          <ConnectorPoint PointX="4.40625" PointY="7.8913378906249978" />
+          <ConnectorPoint PointX="4.40625" PointY="4.1340950520833335" />
+        </AssociationConnector>
+        <AssociationConnector Association="HospitalModel1.FK__check_up__treat___164452B1" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.547841796875" />
+          <ConnectorPoint PointX="4.3749975" PointY="9.547841796875" />
+          <ConnectorPoint PointX="4.3749975" PointY="4.1340950520833335" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

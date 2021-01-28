@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HospitalModel1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="HospitalModel1StoreContainer">
+    <EntitySet Name="check_up" EntityType="HospitalModel1.Store.check_up" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="equipments" EntityType="HospitalModel1.Store.equipments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="medicines" EntityType="HospitalModel1.Store.medicines" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="patients" EntityType="HospitalModel1.Store.patients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="HospitalModel1.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="treatment" EntityType="HospitalModel1.Store.treatment" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__check_up__med_id__173876EA" Association="HospitalModel1.Store.FK__check_up__med_id__173876EA">
+      <End Role="medicines" EntitySet="medicines" />
+      <End Role="check_up" EntitySet="check_up" />
+    </AssociationSet>
+    <AssociationSet Name="FK__check_up__patien__15502E78" Association="HospitalModel1.Store.FK__check_up__patien__15502E78">
+      <End Role="patients" EntitySet="patients" />
+      <End Role="check_up" EntitySet="check_up" />
+    </AssociationSet>
+    <AssociationSet Name="FK__check_up__treat___164452B1" Association="HospitalModel1.Store.FK__check_up__treat___164452B1">
+      <End Role="treatment" EntitySet="treatment" />
+      <End Role="check_up" EntitySet="check_up" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="check_up">
+    <Key>
+      <PropertyRef Name="check_id" />
+    </Key>
+    <Property Name="check_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="patient_id" Type="int" Nullable="false" />
+    <Property Name="complains" Type="text" />
+    <Property Name="findings" Type="text" />
+    <Property Name="treat_id" Type="int" Nullable="false" />
+    <Property Name="med_id" Type="int" Nullable="false" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="check_date" Type="date" />
+  </EntityType>
+  <EntityType Name="equipments">
+    <Key>
+      <PropertyRef Name="equip_id" />
+    </Key>
+    <Property Name="equip_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="equip_name" Type="varchar" MaxLength="50" />
+    <Property Name="requested_date" Type="date" />
+    <Property Name="date_defected" Type="date" />
+  </EntityType>
+  <EntityType Name="medicines">
+    <Key>
+      <PropertyRef Name="med_id" />
+    </Key>
+    <Property Name="med_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="med_name" Type="varchar" MaxLength="64" />
+    <Property Name="quantity" Type="int" />
+    <Property Name="available_Qty" Type="int" />
+    <Property Name="exp_date" Type="date" />
+    <Property Name="requested_date" Type="date" />
+  </EntityType>
+  <EntityType Name="patients">
+    <Key>
+      <PropertyRef Name="patient_id" />
+    </Key>
+    <Property Name="patient_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="fname" Type="varchar" MaxLength="65" />
+    <Property Name="lname" Type="varchar" MaxLength="65" />
+    <Property Name="patient_type" Type="varchar" MaxLength="65" />
+    <Property Name="age" Type="int" />
+    <Property Name="addrs" Type="text" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="treatment">
+    <Key>
+      <PropertyRef Name="treat_id" />
+    </Key>
+    <Property Name="treat_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="treat_type" Type="varchar" MaxLength="64" />
+  </EntityType>
+  <Association Name="FK__check_up__med_id__173876EA">
+    <End Role="medicines" Type="HospitalModel1.Store.medicines" Multiplicity="1" />
+    <End Role="check_up" Type="HospitalModel1.Store.check_up" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="medicines">
+        <PropertyRef Name="med_id" />
+      </Principal>
+      <Dependent Role="check_up">
+        <PropertyRef Name="med_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__check_up__patien__15502E78">
+    <End Role="patients" Type="HospitalModel1.Store.patients" Multiplicity="1" />
+    <End Role="check_up" Type="HospitalModel1.Store.check_up" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="patients">
+        <PropertyRef Name="patient_id" />
+      </Principal>
+      <Dependent Role="check_up">
+        <PropertyRef Name="patient_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__check_up__treat___164452B1">
+    <End Role="treatment" Type="HospitalModel1.Store.treatment" Multiplicity="1" />
+    <End Role="check_up" Type="HospitalModel1.Store.check_up" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="treatment">
+        <PropertyRef Name="treat_id" />
+      </Principal>
+      <Dependent Role="check_up">
+        <PropertyRef Name="treat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
